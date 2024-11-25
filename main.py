@@ -21,9 +21,8 @@ def main():
     print("Trovate {} nuove transazioni".format(len(diff)))
 
     if len(diff)==0:
-        pass
-        #print("Database già aggiornato")
-        #return
+        print("Database già aggiornato")
+        return
     
     print("Aggiorno il Database")
     mysql_connector.update_db(mysql,diff)
