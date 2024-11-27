@@ -1,7 +1,6 @@
-from flask import Flask, jsonify, make_response,redirect,render_template
-from flask import request as flask_request
-from urllib.parse import urlencode
+from flask import Flask,redirect,url_for
 from main import main
+from config import flask_app_config
 
 
 app = Flask(__name__)
@@ -9,12 +8,10 @@ app = Flask(__name__)
 
 # Homepage a http://localhost:8033
 @app.route("/")
-def hello_world():
+def index():
     main()
-    return redirect("http://raffosberry.local/board")
-
-
+    return redirect(url_for('index'))
 
 
 if __name__ == '__main__':
-    app.run(port=8033,debug=True)
+    app.run(**flask_app_config)

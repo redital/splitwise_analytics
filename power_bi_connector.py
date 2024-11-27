@@ -1,9 +1,9 @@
 import requests
 import msal
-import cose_segrete
+from config import CLIENT_ID,TENANT_ID, POWER_BI_EMAIL, POWER_BI_PASSWORD, SECRET_VALUE, DATASET_NAME
 import json
 
-authority_url = "https://login.microsoftonline.com/{tenant_id}".format(tenant_id = cose_segrete.TENANT_ID)
+authority_url = "https://login.microsoftonline.com/{tenant_id}".format(tenant_id = TENANT_ID)
 get_groups_url = "https://api.powerbi.com/v1.0/myorg/groups"
 get_datasets_url = "https://api.powerbi.com/v1.0/myorg/datasets"
 refresh_url = "https://api.powerbi.com/v1.0/myorg/datasets/{dataset_id}/refreshes"
@@ -13,11 +13,11 @@ refresh_status_url = "https://api.powerbi.com/v1.0/myorg/datasets/{dataset_id}/r
 
 def authenticate():
     app = msal.ConfidentialClientApplication(
-        cose_segrete.CLIENT_ID, authority=authority_url, client_credential=cose_segrete.SECRET_VALUE
+        CLIENT_ID, authority=authority_url, client_credential=SECRET_VALUE
     )
     result = app.acquire_token_by_username_password(
-        cose_segrete.POWER_BI_EMAIL,
-        cose_segrete.POWER_BI_PASSWORD,
+        POWER_BI_EMAIL,
+        POWER_BI_PASSWORD,
         ["https://analysis.windows.net/powerbi/api/.default"]
         )
     if "access_token" in result:
@@ -42,7 +42,7 @@ def get_datasets(access_token):
     return res_dict
 
 
-def get_dataset(access_token, my_dataset_name = "SplitWise_Report"):
+def get_dataset(access_token, my_dataset_name = DATASET_NAME):
     headers = {"Authorization": f"Bearer {access_token}"}
     response = requests.get(get_datasets_url, headers=headers)
 

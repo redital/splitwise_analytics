@@ -1,7 +1,7 @@
 import mysql.connector
 from mysql.connector import errorcode
 
-from cose_segrete import database_config
+from config import database_config
 
 def initialize():
   try:
@@ -17,7 +17,6 @@ def initialize():
     return mydb
 
 def ricerca_entity_non_caricate(mydb,df):
-  mydb = mysql.connector.connect(**database_config)
   mydb.connect()
   if mydb and mydb.is_connected():
       with mydb.cursor() as cursor:

@@ -2,7 +2,7 @@ from splitwise import Splitwise
 import pandas as pd
 from fuzzywuzzy import process 
 from fuzzywuzzy import utils
-from cose_segrete import CONSUMER_KEY, CONSUMER_SECRET, API_KEY, GROUP_ID
+from config import CONSUMER_KEY, CONSUMER_SECRET, API_KEY, GROUP_ID, CSV_FILE_PATH
 
 food_df = pd.read_csv(
     r"crea_food_composition_tables.csv"
@@ -50,7 +50,7 @@ def get_group_expenses(sObj, group_id= GROUP_ID,save = False):
 
     df = pd.DataFrame(df)
     if save:
-        df.to_csv("prova.csv", encoding="utf-8", index=False, sep=";")
+        df.to_csv(CSV_FILE_PATH, encoding="utf-8", index=False, sep=";")
     return df
 
 
