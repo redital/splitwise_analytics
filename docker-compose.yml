@@ -1,6 +1,6 @@
 services:
   splitwise_analytics:
-    container_name: segnapunti-munchkin
+    container_name: splitwise_analytics
     environment:
       - PYTHONUNBUFFERED=1
 
