@@ -1,0 +1,42 @@
+services:
+  splitwise_analytics:
+    container_name: segnapunti-munchkin
+    environment:
+      - PYTHONUNBUFFERED=1
+
+      # Flask config
+      - FLASK_APP=flask_app.py
+      - FLASK_DEBUG=${FLASK_DEBUG:-True}
+      - FLASK_HOST=${FLASK_HOST:-0.0.0.0}
+      - FLASK_PORT=${FLASK_PORT:-5000}
+      - SECRET_KEY=${SECRET_KEY:-mysecretkey}
+
+      # DataBase config
+      - DB_HOST=${DB_HOST:-host_del_tuo_db}  
+      - DB_PORT=${DB_PORT:-3306}             
+      - DB_USER=${DB_USER:-tuo_username_db}   
+      - DB_PASSWORD=${DB_PASSWORD:-tuo_password_db}  
+      - DB_NAME=${DB_NAME:-tuo_nome_db}       
+      
+      # Power BI config
+      - SECRET_VALUE=${SECRET_VALUE:-my_secret}
+      - CLIENT_ID=${CLIENT_ID:-placeholder}
+      - TENANT_ID=${TENANT_ID:-placeholder}
+      - DATASET_ID=${DATASET_ID:-placeholder}
+      - DATASET_NAME=${DATASET_NAME:-placeholder}
+      - POWER_BI_EMAIL=${POWER_BI_EMAIL:-placeholder}
+      - POWER_BI_PASSWORD=${POWER_BI_PASSWORD:-placeholder}
+      
+      # SplitWise config
+      - GROUP_ID=${GROUP_ID:-placeholder}
+      - CONSUMER_KEY=${CONSUMER_KEY:-placeholder}
+      - CONSUMER_SECRET=${CONSUMER_SECRET:-placeholder}
+      - API_KEY=${API_KEY:-placeholder}
+      - CSV_FILE_PATH=${CSV_FILE_PATH:-prova.csv}
+      
+    build: .
+    pull_policy: build
+    ports:
+      - "8003:${FLASK_PORT}"
+
+
