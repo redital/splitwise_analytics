@@ -8,7 +8,11 @@ app = Flask(__name__)
 
 # Homepage a http://localhost:8033
 @app.route("/")
-def hello_world():
+def healt():
+    return 200
+
+@app.route("/reload")
+def reload():
     main()
     return redirect("http://raffosberry.local/board")
 
