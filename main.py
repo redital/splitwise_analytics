@@ -1,8 +1,9 @@
 import my_splitwise_export
 import mysql_connector
 import power_bi_connector
-import time
 
+import time
+import requests
 
 def main():
 
@@ -40,6 +41,23 @@ def main():
 
     print("Cerco l'id del DataSet")
     dataset = power_bi_connector.get_dataset(token)
+
+    print("Controllo se l'indirizzo IP pubblico è cambiato")
+          
+    ip = requests.get('https://api.ipify.org').content.decode('utf8')
+    
+    print("Cerco il datasource")
+    datasource = power_bi_connector.get_datasource_connection_details(token,dataset)
+
+    
+    if datasource["server"]==ip:
+        print("Aggiornamento IP non necessario")
+    else:        
+        print("Faccio l'update del datasource")
+        exit_code = power_bi_connector.update_datasource(token, dataset, datasource, ip)
+        
+        if exit_code == 200:
+            print("Aggiornamento avvenuto con successo")
 
 
     print("Invio una richiesta di refresh del DataSet")

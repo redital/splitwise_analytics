@@ -6,9 +6,10 @@ import json
 authority_url = "https://login.microsoftonline.com/{tenant_id}".format(tenant_id = TENANT_ID)
 get_groups_url = "https://api.powerbi.com/v1.0/myorg/groups"
 get_datasets_url = "https://api.powerbi.com/v1.0/myorg/datasets"
+get_datasource_url = "https://api.powerbi.com/v1.0/myorg/datasets/{dataset_id}/datasources"
 refresh_url = "https://api.powerbi.com/v1.0/myorg/datasets/{dataset_id}/refreshes"
 refresh_status_url = "https://api.powerbi.com/v1.0/myorg/datasets/{dataset_id}/refreshes?$top={top_n}"
-
+update_data_source_url = "https://api.powerbi.com/v1.0/myorg/datasets/{dataset_id}/Default.UpdateDatasources"
 
 
 def authenticate():
@@ -63,6 +64,52 @@ def refresh(access_token,my_dataset):
         raise Exception(response.text) 
     return response.status_code
 
+def get_datasource(access_token,my_dataset):
+    headers = {"Authorization": f"Bearer {access_token}"}
+    response = requests.get(get_datasource_url.format(dataset_id=my_dataset["id"]), headers=headers)
+    if response.status_code != 200:
+        print("Error - ",response.status_code,"-",response.text)
+        raise Exception(response.text) 
+    return response.json()
+
+def get_datasource_connection_details(access_token,my_dataset):
+    headers = {"Authorization": f"Bearer {access_token}"}
+    response = requests.get(get_datasource_url.format(dataset_id=my_dataset["id"]), headers=headers)
+    if response.status_code != 200:
+        print("Error - ",response.status_code,"-",response.text)
+        raise Exception(response.text) 
+    return response.json()["value"][0]["connectionDetails"]
+
+def update_datasource(access_token, my_dataset, datasource_connection_details, new_public_ip):
+    headers = {"Authorization": f"Bearer {access_token}"}
+    response = requests.post(
+        update_data_source_url.format(dataset_id=my_dataset["id"]), 
+        headers=headers, 
+        json=build_update_datasource_body(datasource_connection_details,new_public_ip)
+        )    
+    if response.status_code != 200:
+        print("Error - ",response.status_code,"-",response.text)
+        raise Exception(response.text) 
+    return response.status_code
+
+def build_update_datasource_body(datasource_connection_details, new_public_ip):
+    old_connection_details = datasource_connection_details
+    new_connection_details = datasource_connection_details
+    new_connection_details["server"] = new_public_ip
+    data = {
+        "updateDetails": [
+            {
+                "datasourceSelector": {
+                    'datasourceType': 'MySql', 
+                    "connectionDetails": old_connection_details,
+                },
+                "connectionDetails": new_connection_details,
+            }
+        ]
+    }
+    return data
+
+
 def check_refresh_status(access_token,my_dataset,top_n = 1):
     headers = {"Authorization": f"Bearer {access_token}"}
     response = requests.get(refresh_status_url.format(dataset_id=my_dataset["id"],top_n=top_n), headers=headers)
@@ -75,7 +122,3 @@ def check_refresh_status(access_token,my_dataset,top_n = 1):
     for i in res_dict["value"]:
         statuses.append(i["status"])
     return statuses
-
-
-
-
