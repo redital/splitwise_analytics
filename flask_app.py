@@ -1,4 +1,4 @@
-from flask import Flask,redirect
+from flask import Flask,redirect,make_response
 from main import main
 from config import flask_app_config
 
@@ -9,7 +9,7 @@ app = Flask(__name__)
 # Homepage a http://localhost:8033
 @app.route("/")
 def healt():
-    return 200
+    return "Ok"
 
 @app.route("/reload")
 def reload():
