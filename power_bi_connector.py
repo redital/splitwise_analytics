@@ -1,6 +1,6 @@
 import requests
 import msal
-from config import CLIENT_ID,TENANT_ID, POWER_BI_EMAIL, POWER_BI_PASSWORD, SECRET_VALUE, DATASET_NAME
+from config import CLIENT_ID,TENANT_ID, POWER_BI_EMAIL, POWER_BI_PASSWORD, SECRET_VALUE, DATASET_NAME, database_config
 import json
 
 authority_url = "https://login.microsoftonline.com/{tenant_id}".format(tenant_id = TENANT_ID)
@@ -93,8 +93,8 @@ def update_datasource(access_token, my_dataset, datasource_connection_details, n
     return response.status_code
 
 def build_update_datasource_body(datasource_connection_details, new_public_ip):
-    old_connection_details = datasource_connection_details
-    new_connection_details = datasource_connection_details
+    old_connection_details = datasource_connection_details.copy()
+    new_connection_details = datasource_connection_details.copy()
     new_connection_details["server"] = new_public_ip
     data = {
         "updateDetails": [
