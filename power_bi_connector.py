@@ -95,6 +95,7 @@ def update_datasource(access_token, my_dataset, datasource_connection_details, n
 def build_update_datasource_body(datasource_connection_details, new_public_ip):
     old_connection_details = datasource_connection_details.copy()
     new_connection_details = datasource_connection_details.copy()
+    new_connection_details["database"] = database_config["database"]
     new_connection_details["server"] = new_public_ip
     data = {
         "updateDetails": [
