@@ -1,4 +1,4 @@
-from flask import Flask,redirect
+from flask import Flask,redirect,request
 from main import main
 from config import flask_app_config
 
@@ -13,7 +13,9 @@ def healt():
 
 @app.route("/reload")
 def reload():
-    main()
+    force = request.args.get('force')
+    force = (force.lower()=="true")
+    main(force)
     return redirect("http://raffosberry.local/board")
 
 

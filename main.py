@@ -5,7 +5,7 @@ import power_bi_connector
 import time
 import requests
 
-def main():
+def main(force = False):
 
     print("Stabilisco una connessione con SpliWise")
     sObj = my_splitwise_export.initialize()
@@ -16,17 +16,21 @@ def main():
     print("Stabilisco una connessione con il DataBase")
     mysql = mysql_connector.initialize()
 
-    print("Confronto i dati raccolti con quelli sul DataBase")
-    diff = mysql_connector.ricerca_entity_non_caricate(mysql,df)
+    if force:
+        print("Richiesto aggiornamento forzato")
+        mysql_connector.replace_db(mysql,df)
+    else:
+        print("Confronto i dati raccolti con quelli sul DataBase")
+        diff = mysql_connector.ricerca_entity_non_caricate(mysql,df)
 
-    print("Trovate {} nuove transazioni".format(len(diff)))
+        print("Trovate {} nuove transazioni".format(len(diff)))
 
-    if len(diff)==0:
-        print("Database già aggiornato")
-        return
-    
-    print("Aggiorno il Database")
-    mysql_connector.update_db(mysql,diff)
+        if len(diff)==0:
+            print("Database già aggiornato")
+            return
+        
+        print("Aggiorno il Database")
+        mysql_connector.update_db(mysql,diff)
 
 
     print("Controllo sul DataBase")

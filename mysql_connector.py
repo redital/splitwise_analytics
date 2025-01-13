@@ -64,8 +64,24 @@ def update_db(mydb,diff):
   else:
       print("Could not connect")
       return None
+  
 
 
+def replace_db(mydb,new_records):
+  mydb = mysql.connector.connect(**database_config)
+  if mydb and mydb.is_connected():
+      with mydb.cursor() as cursor:
+        sql =  "DELETE FROM `prova`"
+        
+        cursor.execute(sql)
+        mydb.commit()
 
+      mydb.close()
+
+      return update_db(mydb,new_records)
+
+  else:
+      print("Could not connect")
+      return None
 
 
