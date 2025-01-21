@@ -38,9 +38,7 @@ def get_group_expenses(sObj, group_id= GROUP_ID,save = False):
             "Id": expense.getId(),
             "Description": expense.getDescription(),
             "Date": expense.getDate(),
-            "Category": adjust_category(
-                expense.getCategory().getName(), expense.getDescription()
-            ),
+            "Category": adjust_category(expense.getCategory().getName(), expense.getDescription()),
             "Details": expense.getDetails(),
             "Cost": expense.getCost(),
             "Currency": expense.getCurrencyCode(),
