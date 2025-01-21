@@ -44,6 +44,8 @@ def get_group_expenses(sObj, group_id= GROUP_ID,save = False):
             "Currency": expense.getCurrencyCode(),
             "Created by": compute_created_by(expense).getFirstName(),
         }
+        for i in expense.getUsers():
+            df_d["Quota " + i.getFirstName()] = i.getOwedShare()
         df.append(df_d)
 
     df = pd.DataFrame(df)
