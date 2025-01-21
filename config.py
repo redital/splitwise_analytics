@@ -32,4 +32,4 @@ CONSUMER_SECRET = os.environ.get("CONSUMER_SECRET", "placeholder")
 API_KEY = os.environ.get("API_KEY", "placeholder")
 CSV_FILE_PATH = os.environ.get("CSV_FILE_PATH", "prova.csv")
 
-
+DASHBOARD_HOSTNAME = os.environ.get("DASHBOARD_HOSTNAME","placeholder")

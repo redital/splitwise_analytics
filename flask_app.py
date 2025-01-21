@@ -1,6 +1,6 @@
 from flask import Flask,redirect,request
 from main import main
-from config import flask_app_config
+from config import flask_app_config, DASHBOARD_HOSTNAME
 
 
 app = Flask(__name__)
@@ -16,7 +16,7 @@ def reload():
     force = request.args.get('force')
     force = (force.lower()=="true")
     main(force)
-    return redirect("http://raffosberry.local/board")
+    return redirect("http://{}.local/board".format(DASHBOARD_HOSTNAME))
 
 
 if __name__ == '__main__':
