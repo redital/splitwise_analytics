@@ -44,7 +44,7 @@ def get_group_expenses(sObj, group_id= GROUP_ID,save = False):
             "Details": expense.getDetails(),
             "Cost": expense.getCost(),
             "Currency": expense.getCurrencyCode(),
-            "Created by": expense.getCreatedBy().getFirstName(),
+            "Created by": compute_created_by(expense).getFirstName(),
         }
         df.append(df_d)
 
@@ -102,3 +102,11 @@ def adjust_category(category, description):
                 return "Alimentari"
         
     return "Generali"
+
+def compute_created_by(expense):
+    users = expense.getUsers()
+    key = lambda x: x.getPaidShare()
+    pagato_da = [i for i in users if float(i.getPaidShare())>0.0]
+    pagato_da.sort(reverse=True, key=key)
+
+    return pagato_da[0]
