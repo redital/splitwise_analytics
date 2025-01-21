@@ -50,7 +50,7 @@ def get_group_expenses(sObj, group_id= GROUP_ID,save = False):
 
     df = pd.DataFrame(df)
     if save:
-        df.to_csv(CSV_FILE_PATH, encoding="utf-8", index=False, sep=";")
+        df.to_csv(CSV_FILE_PATH, encoding="utf-8", index=False, sep=":")
     return df
 
 
@@ -67,7 +67,17 @@ def getCategory(alimento):
 
 
 def adjust_category(category, description):
-    if category not in ["Generali","Carburante","Cinema","Sport","TV/Telefono/Internet"]:
+    sub_categorie = {
+        "Utenze": ['Pulizie', 'Energia elettrica', 'Riscaldamento/gas', 'Spazzatura', 'TV/Telefono/Internet', 'Acqua'],
+        "Intrattenimento": ['Giochi', 'Cinema', 'Musica', 'Sport'],
+        "Casa": ['Elettronica', 'Arredamento', 'Casalinghi', 'Manutenzione', 'Mutuo', 'Animali domestici', 'Affitto', 'Servizi'],
+        "Trasporti": ['Bicicletta', 'Autobus/treno', 'Auto', 'Carburante', 'Hotel', 'Parcheggio', 'Aereo', 'Taxi'],
+        "Spese personali": ["Asilo/Servizi per l'infanzia", 'Abbigliamento', 'Istruzione', 'Regali', 'Assicurazione', 'Spese mediche', 'Tasse'],
+    }
+    for k, v in sub_categorie.items():
+        if category in v:
+            return k
+    if category not in ["Generali","Carburante","Cinema","Sport","TV/Telefono/Internet"]: # Non dovrebbe più essere necessario
         return category
     if description == "Payment":
         return "Pareggio"
@@ -76,7 +86,7 @@ def adjust_category(category, description):
         "Alimentari": ["everli", "spes", "ingredient","mercato","conad","in's","ins"],
         "Utenze": ["bollett", "internet", "vodafone","gas","luce","corrente"],
         "Ristorante": ["kebab","pizza","panino","kfc","antico vinaio","shawarma","deniz"],
-        "Svago":["calcetto","mostra","bigliett","partita","bowling","cinema"]
+        "Intrattenimento":["calcetto","mostra","bigliett","partita","bowling","cinema"]
     }
     for k, v in descrittori.items():
         for i in v:
