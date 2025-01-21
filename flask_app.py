@@ -13,7 +13,7 @@ def healt():
 
 @app.route("/reload")
 def reload():
-    force = request.args.get('force')
+    force = request.args.get('force',"false")
     force = (force.lower()=="true")
     main(force)
     return redirect("http://{}.local/board".format(DASHBOARD_HOSTNAME))
