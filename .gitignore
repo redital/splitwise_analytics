@@ -1,4 +1,4 @@
 venv
 cose_segrete.py
 __pycache__
-prova.csv
+*.csv
