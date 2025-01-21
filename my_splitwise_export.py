@@ -50,7 +50,7 @@ def get_group_expenses(sObj, group_id= GROUP_ID,save = False):
 
     df = pd.DataFrame(df)
     if save:
-        df.to_csv(CSV_FILE_PATH, encoding="utf-8", index=False, sep=":")
+        df.to_csv(CSV_FILE_PATH, encoding="utf-8", index=False, sep=";")
     return df
 
 
@@ -68,6 +68,7 @@ def getCategory(alimento):
 
 def adjust_category(category, description):
     sub_categorie = {
+        "Alimentari": ['Alcolici'],
         "Utenze": ['Pulizie', 'Energia elettrica', 'Riscaldamento/gas', 'Spazzatura', 'TV/Telefono/Internet', 'Acqua'],
         "Intrattenimento": ['Giochi', 'Cinema', 'Musica', 'Sport'],
         "Casa": ['Elettronica', 'Arredamento', 'Casalinghi', 'Manutenzione', 'Mutuo', 'Animali domestici', 'Affitto', 'Servizi'],
@@ -83,10 +84,10 @@ def adjust_category(category, description):
         return "Pareggio"
     description = description.lower()
     descrittori = {
-        "Alimentari": ["everli", "spes", "ingredient","mercato","conad","in's","ins"],
+        "Alimentari": ["everli", "spes", "ingredient","mercato","conad","in's","ins","toogoodtoogo"],
         "Utenze": ["bollett", "internet", "vodafone","gas","luce","corrente"],
         "Ristorante": ["kebab","pizza","panino","kfc","antico vinaio","shawarma","deniz"],
-        "Intrattenimento":["calcetto","mostra","bigliett","partita","bowling","cinema"]
+        "Intrattenimento":["calcetto","mostra","bigliett","partita","bowling","cinema","carte"]
     }
     for k, v in descrittori.items():
         for i in v:
