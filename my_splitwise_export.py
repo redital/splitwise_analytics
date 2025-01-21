@@ -72,7 +72,7 @@ def adjust_category(category, description):
         "Utenze": ['Pulizie', 'Energia elettrica', 'Riscaldamento/gas', 'Spazzatura', 'TV/Telefono/Internet', 'Acqua'],
         "Intrattenimento": ['Giochi', 'Cinema', 'Musica', 'Sport'],
         "Casa": ['Elettronica', 'Arredamento', 'Casalinghi', 'Manutenzione', 'Mutuo', 'Animali domestici', 'Affitto', 'Servizi'],
-        "Trasporti": ['Bicicletta', 'Autobus/treno', 'Auto', 'Carburante', 'Hotel', 'Parcheggio', 'Aereo', 'Taxi'],
+        "Trasporti": ['Bicicletta', 'Autobus/treno', 'Auto', 'Hotel', 'Parcheggio', 'Aereo', 'Taxi'],
         "Spese personali": ["Asilo/Servizi per l'infanzia", 'Abbigliamento', 'Istruzione', 'Regali', 'Assicurazione', 'Spese mediche', 'Tasse'],
     }
     for k, v in sub_categorie.items():
